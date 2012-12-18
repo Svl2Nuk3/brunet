@@ -23,7 +23,6 @@
         <include name="CookComputing.XmlRpcV2.dll" />
         <include name="jabber-net.dll"/>
         <include name="ManagedOpenSsl.dll"/>
-        <include name="Mono.Security.dll"/>
         <include name="NDesk.Options.dll"/>
       </fileset>
     </copy>

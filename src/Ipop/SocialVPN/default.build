@@ -30,7 +30,6 @@
         <include name="jabber-net.dll"/>
         <include name="zlib.net.dll"/>
         <include name="ManagedOpenSsl.dll"/>
-        <include name="Mono.Security.dll"/>
         <include name="NDesk.Options.dll"/>
         <include name="Ipop.Managed.dll"/>
         <include name="nunit.framework.dll"/>
