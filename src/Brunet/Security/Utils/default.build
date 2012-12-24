@@ -9,7 +9,6 @@
     <copy todir="${build.dir}">
        <fileset basedir="${lib.dir}">
           <include name="Brunet.dll" />
-          <include name="Mono.Security.dll" />
        </fileset>
     </copy>
 

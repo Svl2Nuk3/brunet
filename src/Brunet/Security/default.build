@@ -9,7 +9,6 @@
     <copy todir="${build.dir}">
        <fileset basedir="${lib.dir}">
           <include name="ManagedOpenSsl.dll"/>
-          <include name="Mono.Security.dll" />
           <include name="Brunet.dll" />
           <include name="Brunet.Mock.dll" />
        </fileset>
@@ -42,7 +41,6 @@
        <fileset basedir="${lib.dir}">
           <include name="Brunet.dll" />
           <include name="ManagedOpenSsl.dll"/>
-          <include name="Mono.Security.dll" />
        </fileset>
     </copy>
 

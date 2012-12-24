@@ -83,7 +83,6 @@ namespace Brunet
     protected Node(Address addr, string realm)
     {
       //Start with the address hashcode:
-
       _sync = new Object();
       lock(_sync)
       {
@@ -104,16 +103,17 @@ namespace Brunet
         _running = 0;
         _send_pings = 1;
 
+        TransportAddress.TAType[] ord = new TransportAddress.TAType[6];
+        ord[0] = TransportAddress.TAType.S;
+        ord[1] = TransportAddress.TAType.SO;
+        ord[2] = TransportAddress.TAType.Function;
+        ord[3] = TransportAddress.TAType.Udp;
+        ord[4] = TransportAddress.TAType.Tcp;
+        ord[5] = TransportAddress.TAType.Relay;
+
         //The default is pretty good, but add fallback handling of Relay:
         var erp = DefaultERPolicy.Create(Brunet.Relay.RelayERPolicy.Instance,
-                                         addr,
-                                         TransportAddress.TAType.S,
-                                         TransportAddress.TAType.SO,
-                                         TransportAddress.TAType.Function,
-                                         TransportAddress.TAType.Udp,
-                                         TransportAddress.TAType.Tcp,
-                                         TransportAddress.TAType.Relay
-                                        );
+                                         addr, ord);
         _connection_table = new ConnectionTable(erp);
         _connection_table.ConnectionEvent += this.ConnectionHandler;
 
