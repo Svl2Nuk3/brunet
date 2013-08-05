@@ -196,8 +196,12 @@ namespace Brunet.Applications {
       AHAddress address = null;
       try {
         address = (AHAddress) AddressParser.Parse(node_config.NodeAddress);
-      } catch {
-        address = Utils.GenerateAHAddress();
+      } catch (Exception e) {
+        ProtocolLog.Write(ProtocolLog.Exceptions, e.ToString());
+        // Only create new address if no address is given
+        if (node_config.NodeAddress == null) {
+          address = Utils.GenerateAHAddress();
+        }
       }
 
       // Create the Node state
