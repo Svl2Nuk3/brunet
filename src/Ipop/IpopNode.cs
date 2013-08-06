@@ -37,6 +37,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading;
+using System.Net.Sockets;
+using System.Text;
 
 #if NUNIT
 using NUnit.Framework;
@@ -122,6 +124,8 @@ namespace Ipop {
     /// have shown up.</summary>
     protected DateTime _last_check_node;
 
+    /// <summary>UDP client object for new IP connection notification</summary>
+    protected readonly UdpClient _udp_client;
 
 #region Public
     /// <summary>Creates an IpopNode given a NodeConfig and an IpopConfig.
@@ -190,6 +194,7 @@ namespace Ipop {
       _last_check_node = DateTime.UtcNow;
 
       AppNode.Node.Rpc.AddHandler("Ipop", this);
+      _udp_client = new UdpClient("127.0.0.1", 55123);
     }
 
     /// <summary>Starts the execution of the IpopNode, this passes the caller 
@@ -421,6 +426,11 @@ namespace Ipop {
         if(AppNode.Node.Address.Equals(baddr) || baddr == null) {
           ProtocolLog.WriteIf(IpopLog.Arp, String.Format("No mapping for: {0}",
               Utils.MemBlockToString(ap.TargetProtoAddress, '.')));
+
+      Console.WriteLine("debug 11");
+          Byte[] ip_ascii = Encoding.ASCII.GetBytes(
+                            Utils.MemBlockToString(ap.TargetProtoAddress, '.'));
+          _udp_client.Send(ip_ascii, ip_ascii.Length);
           return;
         }
 

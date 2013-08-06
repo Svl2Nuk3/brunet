@@ -57,8 +57,6 @@ namespace Ipop.Dht {
     protected readonly IDht _dht;
     /// <summary>The ipop namespace where the dhcp server is storing names</summary>
     protected readonly string _ipop_namespace;
-    /// <summary>UDP client object for new IP connection notification</summary>
-    protected readonly UdpClient _udp_client;
 
     /// <summary>Creates a DhtAddressResolver Object.</summary>
     /// <param name="dht">The dht object to use for dht interactions.</param>
@@ -73,7 +71,6 @@ namespace Ipop.Dht {
       _attempts = new Dictionary<MemBlock, int>();
       _queued = new Dictionary<MemBlock, bool>();
       _mapping = new Dictionary<Channel, MemBlock>();
-      _udp_client = new UdpClient("127.0.0.1", 55123);
     }
 
     /// <summary>Translates an IP Address to a Brunet Address.  If it is in the
@@ -156,9 +153,6 @@ namespace Ipop.Dht {
         queue = new Channel(1);
         queue.CloseEvent += MissCallback;
         _mapping[queue] = ip;
-
-        Byte[] ip_ascii = Encoding.ASCII.GetBytes(Utils.MemBlockToString(ip,'.'));
-        _udp_client.Send(ip_ascii, ip_ascii.Length);
       }
 
       String ips = Utils.MemBlockToString(ip, '.');
